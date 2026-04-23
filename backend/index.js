@@ -9,26 +9,8 @@ dotenv.config();
 
 const app = express();
 
-// Allow requests from your frontend origin (set FRONTEND_URL in Render env)
-const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
-
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, curl, Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
-
+// Allow all origins (suitable for college/assignment deployment)
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
